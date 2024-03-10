@@ -1,24 +1,30 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 
 function App() {
-  
-  const [sayac, sayacGuncelle] = useState(0)
+  const [yukleniyor, yukleniyorGuncelle] = useState(true)
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    console.log("1. effect calısti");
-  },[])
-  useEffect(() => {
-    console.log("2. effect calısti");
-  })
-  
 
+    async function fetchData() {
+      const response = await fetch('https://jsonplaceholder.org/users');
+      const jsObjectData = await response.json();
+      setData(jsObjectData);
+      yukleniyorGuncelle(false)
+    };
+
+    setTimeout( fetchData , 2000 )
+
+  }, []); 
+
+  console.log(data);
 
   return (
     <>
-      sayaç:{sayac}
+      { yukleniyor  && <p>Yükleniyor..</p> }
+      {  data.map(  kisi => <p key={kisi.id}> {kisi.firstname} </p> )  }
     </>
-  )
-
+  );
 }
 
 export default App;
