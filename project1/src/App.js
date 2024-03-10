@@ -1,28 +1,38 @@
 import { useEffect, useState } from "react";
+import Kisi from "./bilesenler/Kisi";
 
 function App() {
+  const [veri, veriGuncelle] = useState([])
   const [yukleniyor, yukleniyorGuncelle] = useState(true)
-  const [data, setData] = useState([]);
 
-  useEffect(() => {
+  useEffect( ()=>{
 
-    async function fetchData() {
-      const response = await fetch('https://jsonplaceholder.org/users');
-      const jsObjectData = await response.json();
-      setData(jsObjectData);
+      const LSVeriCek = async()=>localStorage.getItem("rehberJSON")
+
+    async function rehberCek() {
+      const rehberJSON = await LSVeriCek()
+      const rehverVeri = JSON.parse(rehberJSON)
+
+      veriGuncelle(rehverVeri)
       yukleniyorGuncelle(false)
-    };
+    }
 
-    setTimeout( fetchData , 2000 )
+    setTimeout( rehberCek, 2000 )
+  }, [] )
 
-  }, []); 
-
-  console.log(data);
+  console.log(veri);
 
   return (
     <>
-      { yukleniyor  && <p>Yükleniyor..</p> }
-      {  data.map(  kisi => <p key={kisi.id}> {kisi.firstname} </p> )  }
+      <section className="container mt-5">
+        <h1>Rehber</h1>
+
+        <div className="row">
+          { yukleniyor && <p>Veriler yükleniyor..</p> }
+          { veri.map( eleman => <Kisi key={eleman.id} ad={eleman.ad} tel={eleman.tel} />  ) }
+        </div>
+
+      </section>
     </>
   );
 }
