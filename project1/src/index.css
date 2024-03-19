@@ -14,3 +14,22 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.all{
+  width: 150vh;
+  height: 100vh;
+}
+
+.prop{
+  height: 30vh;
+  width: 35vh;
+}
+
+.image{
+  height:30vh;
+}
+
+.image img{
+  width: 100%;
+  height: 20vh;
+}
